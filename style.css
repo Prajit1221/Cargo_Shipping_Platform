@@ -1,0 +1,204 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1em 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background-color: #555;
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+/* Style the form using CSS Grid */
+#post-cargo-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 15px; /* Spacing between grid items */
+    margin-bottom: 20px; /* Add some space below the form */
+}
+
+#post-cargo-form > div {
+}
+
+#post-cargo-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+#post-cargo-form input[type="text"],
+#post-cargo-form input[type="number"],
+#post-cargo-form input[type="date"] {
+    width: 100%;
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+#post-cargo-form input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+}
+
+/* Style the buttons to prevent overlap */
+#post-cargo-section > button {
+    margin-right: 10px;
+    margin-top: 15px; /* Add some space above the buttons */
+}
+
+#post-cargo-form button[type="submit"] {
+    background-color: #5cb85c;
+    color: white;
+    padding: 0.8em 1.5em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#post-cargo-form button[type="submit"]:hover {
+    background-color: #4cae4c;
+}
+
+#cargo-listings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.cargo-listing {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.cargo-listing h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.cargo-listing p {
+    color: #555;
+    margin-bottom: 0.5em;
+}
+
+.view-details-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 0.6em 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.view-details-btn:hover {
+    background-color: #0056b3;
+}
+
+#cargo-details h3 {
+    color: #333;
+    margin-top: 0;
+}
+
+#cargo-details p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 0.8em;
+}
+
+#bids-section {
+    margin-top: 1em;
+    border-top: 1px solid #eee;
+    padding-top: 1em;
+}
+
+.bid-item {
+    margin-bottom: 0.8em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bid-item button {
+    background-color: #ffc107;
+    color: #333;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.bid-item button:hover {
+    background-color: #e0a800;
+}
+
+footer {
+    text-align: center;
+    padding: 1em 0;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

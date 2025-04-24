@@ -5,7 +5,13 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "functions/**"  
+      "functions/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/cargo_listing.html"
+      }
     ]
   }
 }

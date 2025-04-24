@@ -1,9 +1,14 @@
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Allow read access to all documents.  This is often OK for a simple app,
+    // but you'll likely want more restrictive rules in a production app.
     match /{document=**} {
-      allow read, write: if false;
+      allow read: if true;
+      allow write: if false;
+    }
+     match /cargo/{documentId} {
+      allow write: if true; // Allow anyone to write to the cargo collection.
     }
   }
 }

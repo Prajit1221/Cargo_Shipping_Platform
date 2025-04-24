@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo Shipping Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
+    <style>
+        /* Custom styles for the cargo listing cards */
+        .cargo-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .cargo-card h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: #1f2937;
+        }
+        .cargo-card p {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 0.25rem;
+        }
+        .cargo-card .details-btn {
+            margin-top: 1rem;
+        }
+
+        /* Styles for detail view */
+        .cargo-details {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 1rem;
+        }
+        .cargo-details h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+        }
+        .cargo-details p {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+        .cargo-details .back-btn {
+            margin-top: 2rem;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 font-inter">
+    <nav class="bg-white shadow-md rounded-b-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" id="home-link" class="text-gray-800 font-semibold text-xl">Cargo Shipping</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" id="post-cargo-link" class="text-gray-600 hover:bg-gray-100 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Post Cargo</a>
+                        <a href="#" id="listings-link" class="text-gray-600 hover:bg-gray-100 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Cargo Listings</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="mobile-menu-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="mobile-menu-close-icon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" id="mobile-post-cargo-link" class="text-gray-600 hover:bg-gray-100 hover:text-gray-800 block px-3 py-2 rounded-md text-base font-medium">Post Cargo</a>
+                <a href="#" id="mobile-listings-link" class="text-gray-600 hover:bg-gray-100 hover:text-gray-800 block px-3 py-2 rounded-md text-base font-medium">Cargo Listings</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+        <section id="post-cargo-section" class="hidden">
+            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Post a New Cargo</h2>
+            <form id="post-cargo-form" class="bg-white rounded-md shadow-md p-6 space-y-4">
+                <div>
+                    <label for="pickup-location" class="block text-gray-700 text-sm font-bold mb-2">Pickup Location:</label>
+                    <input type="text" id="pickup-location" name="pickup-location" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <div id="pickup-location-error" class="text-red-500 text-xs italic" style="display: none;"></div>
+                </div>
+                <div>
+                    <label for="dropoff-location" class="block text-gray-700 text-sm font-bold mb-2">Dropoff Location:</label>
+                    <input type="text" id="dropoff-location" name="dropoff-location" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <div id="dropoff-location-error" class="text-red-500 text-xs italic" style="display: none;"></div>
+                </div>
+                <div>
+                    <label for="weight" class="block text-gray-700 text-sm font-bold mb-2">Weight (kg):</label>
+                    <input type="number" id="weight" name="weight" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <div id="weight-error" class="text-red-500 text-xs italic" style="display: none;"></div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="height" class="block text-gray-700 text-sm font-bold mb-2">Height (m):</label>
+                        <input type="number" id="height" name="height" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <div id="height-error" class="text-red-500 text-xs italic" style="display: none;"></div>
+                    </div>
+                    <div>
+                        <label for="width" class="block text-gray-700 text-sm font-bold mb-2">Width (m):</label>
+                        <input type="number" id="width" name="width" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <div id="width-error" class="text-red-500 text-xs italic" style="display: none;"></div>
+                    </div>
+                </div>
+                <div>
+                    <label for="distance" class="block text-gray-700 text-sm font-bold mb-2">Distance (km):</label>
+                    <input type="number" id="distance" name="distance" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <div id="distance-error" class="text-red-500 text-xs italic" style="display: none;"></div>
+                </div>
+                <div>
+                    <label for="fragile" class="inline-flex items-center">
+                        <input type="checkbox" id="fragile" name="fragile" class="form-checkbox h-5 w-5 text-red-600 rounded">
+                        <span class="ml-2 text-gray-700 text-sm">Fragile Cargo</span>
+                    </label>
+                </div>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Post Cargo</button>
+                <button type="button" id="back-to-listings-button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2">Back to Listings</button>
+            </form>
+        </section>
+
+        <section id="cargo-listings-section" class="">
+            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Cargo Listings</h2>
+            <div id="cargo-listings-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                </div>
+        </section>
+
+        <section id="cargo-detail-section" class="hidden">
+            <div class="cargo-details">
+                <h2 id="cargo-details-title">Cargo Details</h2>
+                <p id="cargo-details-pickup">Pickup Location: </p>
+                <p id="cargo-details-dropoff">Dropoff Location: </p>
+                <p id="cargo-details-weight">Weight: </p>
+                <p id="cargo-details-dimensions">Dimensions: </p>
+                <p id="cargo-details-distance">Distance: </p>
+                <p id="cargo-details-fragile">Fragile: </p>
+                <p id="cargo-details-postedAt">Posted At: </p>
+                <button id="back-to-listings-detail-button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">Back to Listings</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        window.db = db;
+
+        // Get references to HTML elements
+        const postCargoLink = document.getElementById('post-cargo-link');
+        const mobilePostCargoLink = document.getElementById('mobile-post-cargo-link');
+        const listingsLink = document.getElementById('listings-link');
+        const mobileListingsLink = document.getElementById('mobile-listings-link');
+        const homeLink = document.getElementById('home-link');
+        const postCargoSection = document.getElementById('post-cargo-section');
+        const cargoListingsSection = document.getElementById('cargo-listings-section');
+        const cargoListingsContainer = document.getElementById('cargo-listings-container');
+        const postCargoForm = document.getElementById('post-cargo-form');
+        const backToListingsButton = document.getElementById('back-to-listings-button');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+        const mobileMenuCloseIcon = document.getElementById('mobile-menu-close-icon');
+
+        const cargoDetailSection = document.getElementById('cargo-detail-section');
+        const backToListingsDetailButton = document.getElementById('back-to-listings-detail-button');
+
+        // Function to show cargo listings and hide other sections
+        function goToCargoListings() {
+            cargoListingsSection.classList.remove('hidden');
+            postCargoSection.classList.add('hidden');
+            cargoDetailSection.classList.add('hidden');
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            if (listingsLink) {
+                listingsLink.classList.add('active');
+            } else if (homeLink) {
+                homeLink.classList.add('active');
+            }
+        }
+
+        // Event listener for "Post Cargo" link
+        if (postCargoLink) {
+            postCargoLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                postCargoSection.classList.remove('hidden');
+                cargoListingsSection.classList.add('hidden');
+                cargoDetailSection.classList.add('hidden');
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                postCargoLink.classList.add('active');
+            });
+        }
+
+        if (mobilePostCargoLink) {
+            mobilePostCargoLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                postCargoSection.classList.remove('hidden');
+                cargoListingsSection.classList.add('hidden');
+                cargoDetailSection.classList.add('hidden');
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                mobilePostCargoLink.classList.add('active');
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuIcon.classList.toggle('hidden');
+                mobileMenuCloseIcon.classList.toggle('hidden');
+            });
+        }
+
+        // Event listener for "Cargo Listings" link
+        if (listingsLink) {
+            listingsLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                goToCargoListings();
+            });
+        }
+
+        if (mobileListingsLink) {
+            mobileListingsLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                goToCargoListings();
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuIcon.classList.toggle('hidden');
+                mobileMenuCloseIcon.classList.toggle('hidden');
+            });
+        }
+
+        // Event listener for "Back to Listings" button
+        if (backToListingsButton) {
+            backToListingsButton.addEventListener('click', function() {
+                goToCargoListings();
+            });
+        }
+
+        if (backToListingsDetailButton) {
+            backToListingsDetailButton.addEventListener('click', function() {
+                goToCargoListings();
+            });
+        }
+
+        // Function to fetch cargo listings from Firestore
+        async function fetchCargoListings() {
+            const cargoRef = db.collection('cargo');
+            try {
+                const querySnapshot = await cargoRef.get();
+                cargoListingsContainer.innerHTML = ''; // Clear previous listings
+
+                querySnapshot.forEach(doc => {
+                    const cargoData = doc.data();
+                    const cargoId = doc.id;
+
+                    // Clone the template
+                    const cargoCardTemplate = document.createElement('div');
+                    cargoCardTemplate.className = 'cargo-card';
+                    cargoCardTemplate.innerHTML = `
+                        <h3>${cargoData.pickupLocation} to ${cargoData.dropoffLocation}</h3>
+                        <p>Weight: ${cargoData.weight} kg</p>
+                        <p>Dimensions: ${cargoData.height}m x ${cargoData.width}m x ${cargoData.distance}km</p>
+                        <button class="details-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">View Details & Bid</button>
+                    `;
+
+                    // Set data-cargo-id on the button for later use
+                    const detailsButton = cargoCardTemplate.querySelector('.details-btn');
+                    detailsButton.dataset.cargoId = cargoId;
+
+                    cargoListingsContainer.appendChild(cargoCardTemplate);
+                });
+
+                // Attach event listeners to the "View Details & Bid" buttons
+                const detailButtons = cargoListingsContainer.querySelectorAll('.details-btn');
+                detailButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const cargoId = this.dataset.cargoId;
+                        fetchCargoDetails(cargoId);
+                        cargoListingsSection.classList.add('hidden');
+                        cargoDetailSection.classList.remove('hidden');
+                    });
+                });
+
+            } catch (error) {
+                console.error("Error fetching cargo listings:", error);
+                alert("Failed to load cargo listings. Please try again later.");
+            }
+        }
+
+
+
+        // Function to fetch cargo details from Firestore
+        async function fetchCargoDetails(cargoId) {
+            try {
+                const cargoRef = db.collection('cargo').doc(cargoId);
+                const docSnap = await cargoRef.get();
+
+                if (docSnap.exists()) {
+                    const cargoData = docSnap.data();
+
+                    // Update the cargo details section with the data
+                    document.getElementById('cargo-details-title').textContent = `Cargo Details - ${cargoData.pickupLocation} to ${cargoData.dropoffLocation}`;
+                    document.getElementById('cargo-details-pickup').textContent = `Pickup Location: ${cargoData.pickupLocation}`;
+                    document.getElementById('cargo-details-dropoff').textContent = `Dropoff Location: ${cargoData.dropoffLocation}`;
+                    document.getElementById('cargo-details-weight').textContent = `Weight: ${cargoData.weight} kg`;
+                    document.getElementById('cargo-details-dimensions').textContent = `Dimensions: ${cargoData.height}m x ${cargoData.width}m x ${cargoData.distance}km`;
+                    document.getElementById('cargo-details-distance').textContent = `Distance: ${cargoData.distance} km`;
+                    document.getElementById('cargo-details-fragile').textContent = `Fragile: ${cargoData.fragile ? 'Yes' : 'No'}`;
+                    document.getElementById('cargo-details-postedAt').textContent = `Posted At: ${cargoData.postedAt ? cargoData.postedAt.toDate() : 'N/A'}`; // Format the timestamp
+
+                } else {
+                    console.error("Cargo document does not exist!");
+                    alert("Cargo details not found.");
+                    goToCargoListings();
+                }
+            } catch (error) {
+                console.error("Error fetching cargo details:", error);
+                alert("Failed to load cargo details. Please try again later.");
+                goToCargoListings();
+            }
+        }
+
+        // Event listener for form submission
+        if (postCargoForm) {
+            postCargoForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                // Reset error messages
+                document.getElementById('pickup-location-error').style.display = 'none';
+                document.getElementById('dropoff-location-error').style.display = 'none';
+                document.getElementById('weight-error').style.display = 'none';
+                document.getElementById('height-error').style.display = 'none';
+                document.getElementById('width-error').style.display = 'none';
+                document.getElementById('distance-error').style.display = 'none';
+
+                // Get form values
+                const pickupLocation = document.getElementById('pickup-location').value.trim();
+                const dropoffLocation = document.getElementById('dropoff-location').value.trim();
+                const weight = parseFloat(document.getElementById('weight').value.trim()) || 0;
+                const height = parseFloat(document.getElementById('height').value.trim()) || 0;
+                const width = parseFloat(document.getElementById('width').value.trim()) || 0;
+                const distance = parseFloat(document.getElementById('distance').value.trim()) || 0;
+                const fragile = document.getElementById('fragile').checked;
+
+                // Basic validation
+                let hasErrors = false;
+                if (!pickupLocation) {
+                    document.getElementById('pickup-location-error').textContent = 'Pickup location is required';
+                    document.getElementById('pickup-location-error').style.display = 'block';
+                    hasErrors = true;
+                }
+                if (!dropoffLocation) {
+                    document.getElementById('dropoff-location-error').textContent = 'Dropoff location is required';
+                    document.getElementById('dropoff-location-error').style.display = 'block';
+                    hasErrors = true;
+                }
+                if (isNaN(weight) || weight <= 0) {
+                    document.getElementById('weight-error').textContent = 'Weight must be a positive number';
+                    document.getElementById('weight-error').style.display = 'block';
+                    hasErrors = true;
+                }
+                if (isNaN(height) || height <= 0) {
+                    document.getElementById('height-error').textContent = 'Height must be a positive number';
+                    document.getElementById('height-error').style.display = 'block';
+                    hasErrors = true;
+                }
+                if (isNaN(width) || width <= 0) {
+                    document.getElementById('width-error').textContent = 'Width must be a positive number';
+                    document.getElementById('width-error').style.display = 'block';
+                    hasErrors = true;
+                }
+                if (isNaN(distance) || distance <= 0) {
+                    document.getElementById('distance-error').textContent = 'Distance must be a positive number';
+                    document.getElementById('distance-error').style.display = 'block';
+                    hasErrors = true;
+                }
+
+                if (hasErrors) {
+                    return; // Stop submission if there are errors
+                }
+
+                try {
+                    // Add cargo data to Firestore
+                    const docRef = await db.collection('cargo').add({
+                        pickupLocation: pickupLocation,
+                        dropoffLocation: dropoffLocation,
+                        weight: weight,
+                        height: height,
+                        width: width,
+                        distance: distance,
+                        fragile: fragile,
+                        postedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    console.log("Cargo posted successfully with ID: ", docRef.id);
+                    postCargoForm.reset();
+                    alert("Cargo posted successfully!");
+                    goToCargoListings();
+
+
+                } catch (error) {
+                    console.error("Error adding cargo:", error);
+                    alert("Failed to post cargo. Please try again later.");
+                }
+            });
+        }
+
+        // Mobile menu toggle functionality
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuIcon.classList.toggle('hidden');
+                mobileMenuCloseIcon.classList.toggle('hidden');
+            });
+        }
+
+        // Initial load: Fetch and display cargo listings
+        if (listingsLink) {
+          fetchCargoListings();
+        } else {
+           fetchCargoListings();
+        }
+    </script>
+</body>
+</html>
