@@ -1,136 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cargo Shipping Platform</title>
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="style.css">
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-      import { getFirestore, collection, getDocs, addDoc, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-    
-      const firebaseConfig = {
-        apiKey: "AIzaSyALlxQUsWfyjwsY0ajjJR3Goux-usY47aU",
-        authDomain: "cargo-shipping-89b2e.firebaseapp.com",
-        projectId: "cargo-shipping-89b2e",
-        storageBucket: "cargo-shipping-89b2e.firebasestorage.app",
-        messagingSenderId: "165808147357",
-        appId: "1:165808147357:web:b4ecbe7341158278e67d74"
-      };
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargo Shipping Platform</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
 
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-      window.db = db;
-      window.collection = collection;
-      window.getDocs = getDocs;
-      window.addDoc = addDoc;
-      window.serverTimestamp = serverTimestamp;
-    </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyALlxQUsWfyjwsY0ajjJR3Goux-usY47aU",
+      authDomain: "cargo-shipping-89b2e.firebaseapp.com",
+      projectId: "cargo-shipping-89b2e",
+      storageBucket: "cargo-shipping-89b2e.appspot.com",
+      messagingSenderId: "165808147357",
+      appId: "1:165808147357:web:b4ecbe7341158278e67d74"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Exposing firebase functions to window
+    window.db = db;
+    window.collection = collection;
+    window.getDocs = getDocs;
+    window.addDoc = addDoc;
+    window.serverTimestamp = serverTimestamp;
+    window.doc = doc;           // <-- Added this
+    window.getDoc = getDoc;      // <-- Added this
+  </script>
 </head>
+
 <body>
-    <header>
-        <h1>Cargo Shipping Platform</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="#" id="post-cargo-link">Post Cargo</a></li>
-                <li><a href="/listings">Cargo Listings</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>Cargo Shipping Platform</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#" id="post-cargo-link">Post Cargo</a></li>
+        <li><a href="/listings">Cargo Listings</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <main>
-        <section id="post-cargo-section" style="display: none;">
-            <h2>Post New Cargo</h2>
-            <form id="post-cargo-form">
-                <div>
-                    <label for="from-city">From City:</label>
-                    <input type="text" id="from-city" name="from-city" required>
-                </div>
-                <div>
-                    <label for="to-city">To City:</label>
-                    <input type="text" id="to-city" name="to-city" required>
-                </div>
-                <div>
-                    <label for="weight">Weight (in kg):</label>
-                    <input type="number" id="weight" name="weight" min="0" required>
-                </div>
-                <div>
-                    <label for="height">Height (in cm):</label>
-                    <input type="number" id="height" name="height" min="0">
-                </div>
-                <div>
-                    <label for="width">Width (in cm):</label>
-                    <input type="number" id="width" name="width" min="0">
-                </div>
-                <div>
-                    <label for="length">Length (in cm):</label>
-                    <input type="number" id="length" name="length" min="0">
-                </div>
-                <div>
-                    <label for="fragile">Fragile Cargo:</label>
-                    <input type="checkbox" id="fragile" name="fragile">
-                </div>
-                <div>
-                    <label for="distance">Distance (in km):</label>
-                    <input type="number" id="distance" name="distance" min="0" required>
-                </div>
-                <div>
-                    <label for="time-limit">Delivery Time Limit:</label>
-                    <input type="date" id="time-limit" name="time-limit" required>
-                </div>
-                <button type="submit">Post Cargo</button>
-            </form>
-            <button id="back-to-listings">Back to Listings</button>
-        </section>
-
-        <section id="cargo-listings-section">
-            <h2>Available Cargo Listings</h2>
-            <div id="cargo-listings">
-                </div>
-        </section>
-
-        <section id="cargo-detail-section" style="display: none;">
-            <h2>Cargo Details</h2>
-            <div id="cargo-details">
-                <h3>Cargo ID: <span id="detail-id"></span></h3>
-                <p>From: <span id="detail-from"></span> to <span id="detail-to"></span></p>
-                <p>Weight: <span id="detail-weight"></span> kg</p>
-                <p>Dimensions: <span id="detail-height"></span>x<span id="detail-width"></span>x<span id="detail-length"></span> cm</p>
-                <p>Fragile: <span id="detail-fragile"></span></p>
-                <p>Distance: <span id="detail-distance"></span> km</p>
-                <p>Delivery Time Limit: <span id="detail-time-limit"></span></p>
-
-                <h3>Bids</h3>
-                <div id="bids-section">
-                    <div class="bid-item">
-                        <p>Truck Company A: ₹5000</p>
-                        <button>Bid Now</button>
-                    </div>
-                    <div class="bid-item">
-                        <p>Driver John: ₹4800</p>
-                        <button>Bid Now</button>
-                    </div>
-                </div>
-            </div>
-            <button id="back-to-listings-detail">Back to Listings</button>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Cargo Shipping Platform</p>
-    </footer>
-
-    <template id="cargo-listing-template">
-        <div class="cargo-listing">
-            <h3>From: <span class="from-city"></span> to <span class="to-city"></span></h3>
-            <p>Weight: <span class="weight"></span> kg</p>
-            <p>Distance: <span class="distance"></span> km</p>
-            <button class="view-details-btn" data-cargo-id="">View Details & Bid</button>
+  <main>
+    <!-- Post Cargo Section -->
+    <section id="post-cargo-section" style="display: none;">
+      <h2>Post New Cargo</h2>
+      <form id="post-cargo-form">
+        <div>
+          <label for="from-city">From City:</label>
+          <input type="text" id="from-city" name="from-city" required>
         </div>
-    </template>
+        <div>
+          <label for="to-city">To City:</label>
+          <input type="text" id="to-city" name="to-city" required>
+        </div>
+        <div>
+          <label for="weight">Weight (in kg):</label>
+          <input type="number" id="weight" name="weight" min="0" required>
+        </div>
+        <div>
+          <label for="height">Height (in cm):</label>
+          <input type="number" id="height" name="height" min="0">
+        </div>
+        <div>
+          <label for="width">Width (in cm):</label>
+          <input type="number" id="width" name="width" min="0">
+        </div>
+        <div>
+          <label for="length">Length (in cm):</label>
+          <input type="number" id="length" name="length" min="0">
+        </div>
+        <div>
+          <label for="fragile">Fragile Cargo:</label>
+          <input type="checkbox" id="fragile" name="fragile">
+        </div>
+        <div>
+          <label for="distance">Distance (in km):</label>
+          <input type="number" id="distance" name="distance" min="0" required>
+        </div>
+        <div>
+          <label for="time-limit">Delivery Time Limit:</label>
+          <input type="date" id="time-limit" name="time-limit" required>
+        </div>
+        <button type="submit">Post Cargo</button>
+      </form>
+      <button id="back-to-listings">Back to Listings</button>
+    </section>
 
-    <script src="script.js"></script>
+    <!-- Cargo Listings Section -->
+    <section id="cargo-listings-section">
+      <h2>Available Cargo Listings</h2>
+      <div id="cargo-listings"></div>
+    </section>
+
+    <!-- Cargo Details Section -->
+    <section id="cargo-detail-section" style="display: none;">
+      <h2>Cargo Details</h2>
+      <div id="cargo-details">
+        <h3>Cargo ID: <span id="detail-id"></span></h3>
+        <p>From: <span id="detail-from"></span> to <span id="detail-to"></span></p>
+        <p>Weight: <span id="detail-weight"></span> kg</p>
+        <p>Dimensions: <span id="detail-height"></span>x<span id="detail-width"></span>x<span id="detail-length"></span> cm</p>
+        <p>Fragile: <span id="detail-fragile"></span></p>
+        <p>Distance: <span id="detail-distance"></span> km</p>
+        <p>Delivery Time Limit: <span id="detail-time-limit"></span></p>
+
+        <h3>Bids</h3>
+        <div id="bids-section">
+          <div class="bid-item">
+            <p>Truck Company A: ₹5000</p>
+            <button>Bid Now</button>
+          </div>
+          <div class="bid-item">
+            <p>Driver John: ₹4800</p>
+            <button>Bid Now</button>
+          </div>
+        </div>
+      </div>
+      <button id="back-to-listings-detail">Back to Listings</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cargo Shipping Platform</p>
+  </footer>
+
+  <!-- Template for Cargo Listing -->
+  <template id="cargo-listing-template">
+    <div class="cargo-listing">
+      <h3>From: <span class="from-city"></span> to <span class="to-city"></span></h3>
+      <p>Weight: <span class="weight"></span> kg</p>
+      <p>Distance: <span class="distance"></span> km</p>
+      <button class="view-details-btn" data-cargo-id="">View Details & Bid</button>
+    </div>
+  </template>
+
+  <!-- Main Script -->
+  <script src="script.js"></script>
 </body>
 </html>
