@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Cargo Shipping</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <nav>
+        <span style="display:flex;align-items:center;gap:0.5rem;">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#1a73e8"/><path d="M12 32V20.5C12 19.12 13.12 18 14.5 18H33.5C34.88 18 36 19.12 36 20.5V32" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="26" width="16" height="8" rx="2" fill="#fff"/><circle cx="18.5" cy="34.5" r="2.5" fill="#1a73e8"/><circle cx="29.5" cy="34.5" r="2.5" fill="#1a73e8"/></svg>
+            <span style="font-size:1.5rem;font-weight:700;letter-spacing:1px;">Safe Haul</span>
+        </span>
+        <a href="index.html">Home</a>
+        <a href="auction.html">Auctions</a>
+        <a href="listing.html">List Cargo</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="login.html" id="nav-login">Login</a>
+        <a href="#" id="nav-logout" style="display:none;">Logout</a>
+        <button id="darkModeToggle" style="margin-left:1rem;">🌙</button>
+    </nav>
+    <main>
+        <div class="license-card">
+            <div class="license-header">
+                <svg width="40" height="40" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="12" fill="#1a73e8"/><path d="M12 32V20.5C12 19.12 13.12 18 14.5 18H33.5C34.88 18 36 19.12 36 20.5V32" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="26" width="16" height="8" rx="2" fill="#fff"/><circle cx="18.5" cy="34.5" r="2.5" fill="#1a73e8"/><circle cx="29.5" cy="34.5" r="2.5" fill="#1a73e8"/></svg>
+                <span class="license-title">Safe Haul Digital License</span>
+            </div>
+            <div class="license-body">
+                <div class="license-avatar">
+                    <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=SafeHaul" alt="User Avatar" style="width:80px;height:80px;border-radius:50%;border:3px solid #1a73e8;background:#fff;">
+                </div>
+                <div class="license-details" id="userInfo">
+                    <!-- User info will be loaded here -->
+                </div>
+            </div>
+            <div class="license-footer">
+                <span id="memberSince"></span>
+                <span class="license-watermark">SAFE HAUL</span>
+            </div>
+        </div>
+        <section id="badges" style="margin-top:2rem;text-align:center;">
+            <h3>Badges & Achievements</h3>
+            <!-- Badges will be displayed here -->
+        </section>
+    </main>
+    <footer>
+        &copy; 2024 Safe Haul. All rights reserved.
+    </footer>
+    <style>
+    .license-card {
+        max-width: 480px;
+        margin: 2rem auto 0 auto;
+        background: #f5faff;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(26,115,232,0.10);
+        border: 2.5px solid #1a73e8;
+        overflow: hidden;
+        position: relative;
+        font-family: 'Roboto', Arial, sans-serif;
+        animation: fadeIn 0.7s;
+    }
+    .license-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: #1a73e8;
+        color: #fff;
+        padding: 1rem 1.5rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+    .license-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+    }
+    .license-body {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+        background: #e3f2fd;
+        position: relative;
+    }
+    .license-avatar {
+        flex-shrink: 0;
+    }
+    .license-details {
+        flex: 1;
+        font-size: 1.08rem;
+        color: #1a237e;
+        font-weight: 500;
+        line-height: 1.7;
+    }
+    .license-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #e3f2fd;
+        padding: 0.7rem 1.5rem;
+        font-size: 0.98rem;
+        color: #1976d2;
+        position: relative;
+    }
+    .license-watermark {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #e3f2fd;
+        letter-spacing: 6px;
+        position: absolute;
+        right: 1.5rem;
+        bottom: 0.7rem;
+        opacity: 0.5;
+        pointer-events: none;
+        user-select: none;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    </style>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Your Firebase config -->
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/session.js"></script>
+    <script src="assets/js/user.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Map Modal -->
+    <div id="mapModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);z-index:2000;align-items:center;justify-content:center;">
+        <div style="position:relative;width:90vw;max-width:600px;height:70vh;background:#fff;border-radius:10px;overflow:hidden;">
+            <button id="closeMapModal" style="position:absolute;top:10px;right:10px;z-index:10;">Close</button>
+            <div id="map" style="width:100%;height:100%;"></div>
+            <div id="mapInfo" style="position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,0.9);padding:0.5rem 1rem;border-radius:6px;z-index:10;"></div>
+        </div>
+    </div>
+    <script src="assets/js/cargo_map.js"></script>
+</body>
+</html> 

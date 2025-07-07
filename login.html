@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cargo Shipping</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav>
+        <span style="display:flex;align-items:center;gap:0.5rem;">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#1a73e8"/><path d="M12 32V20.5C12 19.12 13.12 18 14.5 18H33.5C34.88 18 36 19.12 36 20.5V32" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="26" width="16" height="8" rx="2" fill="#fff"/><circle cx="18.5" cy="34.5" r="2.5" fill="#1a73e8"/><circle cx="29.5" cy="34.5" r="2.5" fill="#1a73e8"/></svg>
+            <span style="font-size:1.5rem;font-weight:700;letter-spacing:1px;">Safe Haul</span>
+        </span>
+        <a href="index.html">Home</a>
+        <a href="auction.html">Auctions</a>
+        <a href="listing.html">List Cargo</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="login.html" id="nav-login">Login</a>
+        <a href="#" id="nav-logout" style="display:none;">Logout</a>
+        <button id="darkModeToggle" style="margin-left:1rem;">🌙</button>
+    </nav>
+    <main>
+        <div style="text-align:center;margin-bottom:2rem;">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:0.5rem;"><rect width="48" height="48" rx="12" fill="#1a73e8"/><path d="M12 32V20.5C12 19.12 13.12 18 14.5 18H33.5C34.88 18 36 19.12 36 20.5V32" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="26" width="16" height="8" rx="2" fill="#fff"/><circle cx="18.5" cy="34.5" r="2.5" fill="#1a73e8"/><circle cx="29.5" cy="34.5" r="2.5" fill="#1a73e8"/></svg>
+            <h2 style="font-size:2rem;margin:0;">Safe Haul Login</h2>
+        </div>
+        <form id="loginForm" class="animated-card">
+            <label for="email"><span style="margin-right:0.5rem;">📧</span>Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password"><span style="margin-right:0.5rem;">🔒</span>Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit"><span style="margin-right:0.5rem;">➡️</span>Login</button>
+        </form>
+        <a href="#" id="forgotPasswordLink" style="display:block;margin-bottom:1rem;">Forgot Password?</a>
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    </main>
+    <footer>
+        &copy; 2024 Safe Haul. All rights reserved.
+    </footer>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Your Firebase config -->
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/nav.js"></script>
+</body>
+</html> 

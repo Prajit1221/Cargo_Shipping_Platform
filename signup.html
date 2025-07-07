@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Cargo Shipping</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav>
+        <span style="display:flex;align-items:center;gap:0.5rem;">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#1a73e8"/><path d="M12 32V20.5C12 19.12 13.12 18 14.5 18H33.5C34.88 18 36 19.12 36 20.5V32" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="26" width="16" height="8" rx="2" fill="#fff"/><circle cx="18.5" cy="34.5" r="2.5" fill="#1a73e8"/><circle cx="29.5" cy="34.5" r="2.5" fill="#1a73e8"/></svg>
+            <span style="font-size:1.5rem;font-weight:700;letter-spacing:1px;">Safe Haul</span>
+        </span>
+        <a href="index.html">Home</a>
+        <a href="auction.html">Auctions</a>
+        <a href="listing.html">List Cargo</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="login.html" id="nav-login">Login</a>
+        <a href="#" id="nav-logout" style="display:none;">Logout</a>
+        <button id="darkModeToggle" style="margin-left:1rem;">🌙</button>
+    </nav>
+    <main>
+        <div style="text-align:center;margin-bottom:2rem;">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:0.5rem;"><rect width="48" height="48" rx="12" fill="#1a73e8"/><path d="M12 32V20.5C12 19.12 13.12 18 14.5 18H33.5C34.88 18 36 19.12 36 20.5V32" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="26" width="16" height="8" rx="2" fill="#fff"/><circle cx="18.5" cy="34.5" r="2.5" fill="#1a73e8"/><circle cx="29.5" cy="34.5" r="2.5" fill="#1a73e8"/></svg>
+            <h2 style="font-size:2rem;margin:0;">Safe Haul Signup</h2>
+        </div>
+        <form id="signupForm" class="animated-card">
+            <div id="step1">
+                <label for="role" style="font-size:1.1rem;font-weight:600;">I am a:</label>
+                <select id="role" name="role" required style="margin-bottom:1.5rem;">
+                    <option value="" disabled selected>Select user type</option>
+                    <option value="cargo_owner">Cargo Owner</option>
+                    <option value="truck_owner">Truck Owner / Logistics Company</option>
+                </select>
+                <button type="button" id="nextBtn" style="margin-bottom:1rem;"><span style="margin-right:0.5rem;">➡️</span>Next</button>
+            </div>
+            <div id="step2" style="display:none;">
+                <div id="cargoOwnerFields">
+                    <label for="name"><span style="margin-right:0.5rem;">👤</span>Name:</label>
+                    <input type="text" id="name" name="name">
+                    <label for="company"><span style="margin-right:0.5rem;">🏢</span>Company Name:</label>
+                    <input type="text" id="company" name="company">
+                    <label for="mobile"><span style="margin-right:0.5rem;">📱</span>Mobile Number:</label>
+                    <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" maxlength="10">
+                </div>
+                <div id="truckFields" style="display:none;">
+                    <label for="nameTruck"><span style="margin-right:0.5rem;">👤</span>Name:</label>
+                    <input type="text" id="nameTruck" name="nameTruck">
+                    <label for="mobileTruck"><span style="margin-right:0.5rem;">📱</span>Mobile Number:</label>
+                    <input type="tel" id="mobileTruck" name="mobileTruck" pattern="[0-9]{10}" maxlength="10">
+                    <label for="license"><span style="margin-right:0.5rem;">🪪</span>License Number:</label>
+                    <input type="text" id="license" name="license">
+                    <label for="truckReg"><span style="margin-right:0.5rem;">🚚</span>Truck Registration Number:</label>
+                    <input type="text" id="truckReg" name="truckReg">
+                </div>
+                <label for="email"><span style="margin-right:0.5rem;">📧</span>Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="password"><span style="margin-right:0.5rem;">🔒</span>Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit"><span style="margin-right:0.5rem;">➡️</span>Sign Up</button>
+            </div>
+        </form>
+        <script>
+        // Two-step signup logic
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const nextBtn = document.getElementById('nextBtn');
+        const roleSelect = document.getElementById('role');
+        const cargoFields = document.getElementById('cargoOwnerFields');
+        const truckFields = document.getElementById('truckFields');
+        nextBtn.onclick = function() {
+            if (!roleSelect.value) {
+                alert('Please select your user type.');
+                return;
+            }
+            step1.style.display = 'none';
+            step2.style.display = '';
+            if (roleSelect.value === 'truck_owner') {
+                cargoFields.style.display = 'none';
+                truckFields.style.display = '';
+                document.getElementById('nameTruck').required = true;
+                document.getElementById('mobileTruck').required = true;
+                document.getElementById('license').required = true;
+                document.getElementById('truckReg').required = true;
+                document.getElementById('name').required = false;
+                document.getElementById('company').required = false;
+                document.getElementById('mobile').required = false;
+            } else {
+                cargoFields.style.display = '';
+                truckFields.style.display = 'none';
+                document.getElementById('name').required = true;
+                document.getElementById('company').required = true;
+                document.getElementById('mobile').required = true;
+                document.getElementById('nameTruck').required = false;
+                document.getElementById('mobileTruck').required = false;
+                document.getElementById('license').required = false;
+                document.getElementById('truckReg').required = false;
+            }
+        };
+        </script>
+        <section style="margin:2rem auto 0 auto;max-width:700px;background:#e3f2fd;padding:2rem 1.5rem;border-radius:12px;box-shadow:0 2px 8px rgba(26,115,232,0.06);">
+            <h2 style="color:#1a73e8;text-align:center;margin-top:0;">Safety Rules for Secure Shipping</h2>
+            <ul style="font-size:1.1rem;line-height:1.7;color:#333;max-width:600px;margin:1.5rem auto 0 auto;">
+                <li>Verify all documents and licenses before accepting a shipment or bid.</li>
+                <li>Ensure cargo is properly packed and labeled for safe transport.</li>
+                <li>Use only registered and insured vehicles for shipping.</li>
+                <li>Share real-time tracking and status updates with all parties.</li>
+                <li>Never share sensitive information outside the platform.</li>
+                <li>Report any suspicious activity to Safe Haul support immediately.</li>
+            </ul>
+        </section>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </main>
+    <footer>
+        &copy; 2024 Safe Haul. All rights reserved.
+    </footer>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Your Firebase config -->
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/nav.js"></script>
+</body>
+</html> 

@@ -1,0 +1,28 @@
+body {
+    background: #181818;
+    color: #f7f7f7;
+}
+
+main {
+    background: #232323;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+h1, h2, h3 {
+    color: #90caf9;
+}
+
+input, select, textarea, button {
+    background: #232323;
+    color: #f7f7f7;
+    border: 1px solid #444;
+}
+
+button {
+    background: #1976d2;
+    color: #fff;
+}
+
+button:hover {
+    background: #1565c0;
+} 

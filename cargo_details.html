@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo Details - Cargo Shipping</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <main>
+        <h2>Cargo Details</h2>
+        <section id="cargoInfo">
+            <!-- Cargo information will be loaded here -->
+        </section>
+        <button id="viewRouteBtn" style="margin:1rem 0;">View Route</button>
+        <section id="cargoImages">
+            <!-- Cargo images gallery -->
+        </section>
+        <section id="auctionTimer">
+            <!-- Auction countdown timer -->
+        </section>
+        <section id="bidHistory">
+            <h3>Bid History</h3>
+            <!-- Bid history will be shown here -->
+        </section>
+    </main>
+    <footer>
+        &copy; 2024 Cargo Shipping Platform. All rights reserved.
+    </footer>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Your Firebase config -->
+    <script src="assets/js/firebase.js"></script>
+    <script src="assets/js/session.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Map Modal -->
+    <div id="mapModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);z-index:2000;align-items:center;justify-content:center;">
+        <div style="position:relative;width:90vw;max-width:600px;height:70vh;background:#fff;border-radius:10px;overflow:hidden;">
+            <button id="closeMapModal" style="position:absolute;top:10px;right:10px;z-index:10;">Close</button>
+            <div id="map" style="width:100%;height:100%;"></div>
+            <div id="mapInfo" style="position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,0.9);padding:0.5rem 1rem;border-radius:6px;z-index:10;"></div>
+        </div>
+    </div>
+    <script src="assets/js/cargo_map.js"></script>
+</body>
+</html> 

@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+    --primary: #1a73e8;
+    --primary-dark: #155ab6;
+    --accent: #43a047;
+    --danger: #e53935;
+    --bg: #f7f7f7;
+    --bg-dark: #181818;
+    --text: #222;
+    --text-light: #f7f7f7;
+    --card-bg: #fff;
+    --card-bg-dark: #232323;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+}
+
+main {
+    max-width: 800px;
+    margin: 2rem auto 3rem auto;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+nav {
+    background: var(--primary);
+    color: #fff;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    font-size: 1.1rem;
+}
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+nav a:hover {
+    color: var(--accent);
+}
+
+footer {
+    background: var(--primary);
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+.card, .cargo-item {
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s;
+}
+.card:hover, .cargo-item:hover {
+    box-shadow: 0 4px 16px rgba(26,115,232,0.10);
+}
+
+h1, h2, h3, h4 {
+    color: var(--primary);
+    margin-top: 0;
+}
+
+input, select, textarea, button {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border 0.2s, background 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(26,115,232,0.08);
+}
+button:hover {
+    background: var(--primary-dark);
+}
+
+.success {
+    color: var(--accent);
+    font-weight: 600;
+}
+.error {
+    color: var(--danger);
+    font-weight: 600;
+}
+
+img {
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+/* Toasts */
+.toast {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2rem;
+    background: var(--primary);
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    z-index: 1000;
+    opacity: 0.95;
+    font-size: 1rem;
+    animation: fadeIn 0.3s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 0.95; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    main { max-width: 98vw; padding: 1rem; }
+}
+@media (max-width: 600px) {
+    nav { flex-direction: column; gap: 0.5rem; font-size: 1rem; }
+    main { padding: 0.5rem; }
+    .card, .cargo-item { padding: 1rem; }
+}
+
+/* Dark mode support */
+body.dark-mode {
+    background: var(--bg-dark);
+    color: var(--text-light);
+}
+body.dark-mode main,
+body.dark-mode .card,
+body.dark-mode .cargo-item {
+    background: var(--card-bg-dark);
+    color: var(--text-light);
+}
+body.dark-mode nav, body.dark-mode footer {
+    background: #232323;
+    color: #fff;
+}
+body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
+    background: #232323;
+    color: #f7f7f7;
+    border: 1px solid #444;
+}
+body.dark-mode button {
+    background: #1976d2;
+    color: #fff;
+}
+body.dark-mode button:hover {
+    background: #1565c0;
+} 
