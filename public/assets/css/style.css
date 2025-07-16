@@ -36,17 +36,35 @@ main {
 nav {
     background: var(--primary);
     color: #fff;
-    padding: 1rem 0;
+    padding: 1rem 2.5vw;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 2rem;
     font-size: 1.1rem;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+nav .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+nav .nav-center {
+    display: flex;
+    gap: 1.5rem;
+    flex: 1;
+    justify-content: center;
+}
+nav .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 nav a {
     color: #fff;
     text-decoration: none;
-    margin: 0 1rem;
+    margin: 0 0.5rem;
     font-weight: 500;
     transition: color 0.2s;
 }
@@ -150,10 +168,14 @@ img {
 /* Responsive Design */
 @media (max-width: 900px) {
     main { max-width: 98vw; padding: 1rem; }
+    nav { flex-direction: column; gap: 0.5rem; font-size: 1rem; padding-left: 3vw; padding-right: 3vw; }
+    nav .nav-center { flex-wrap: wrap; gap: 0.7rem; }
+    nav .nav-right { margin-top: 0.5rem; }
 }
 @media (max-width: 600px) {
-    nav { flex-direction: column; gap: 0.5rem; font-size: 1rem; }
-    main { padding: 0.5rem; }
+    nav { flex-direction: column; gap: 0.5rem; font-size: 1rem; padding-left: 4vw; padding-right: 4vw; }
+    nav .nav-center { flex-wrap: wrap; gap: 0.5rem; }
+    nav .nav-right { margin-top: 0.5rem; }
     .card, .cargo-item { padding: 1rem; }
 }
 

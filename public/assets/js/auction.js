@@ -38,8 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     const cargo = doc.data();
                     const cargoId = doc.id;
                     const createdAt = cargo.createdAt && cargo.createdAt.toDate ? cargo.createdAt.toDate() : new Date();
-                    const auctionStart = new Date(createdAt.getTime() + 10 * 60 * 1000);
-                    const auctionEnd = new Date(auctionStart.getTime() + 5 * 60 * 1000);
+                    // Set auctionStart to 1 minute after creation and auctionEnd to 2 minutes after auctionStart
+                    const auctionStart = new Date(createdAt.getTime() + 1 * 60 * 1000);
+                    const auctionEnd = new Date(auctionStart.getTime() + 2 * 60 * 1000);
                     const now = new Date();
                     let auctionStatus = '';
                     if (now < auctionStart) {
@@ -125,8 +126,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const cargo = doc.data();
                 currentCargoOwnerId = cargo.ownerId;
                 const createdAt = cargo.createdAt && cargo.createdAt.toDate ? cargo.createdAt.toDate() : new Date();
-                const auctionStart = new Date(createdAt.getTime() + 10 * 60 * 1000);
-                const auctionEnd = new Date(auctionStart.getTime() + 5 * 60 * 1000);
+                // Also update in loadSingleCargo
+                const auctionStart = new Date(createdAt.getTime() + 1 * 60 * 1000);
+                const auctionEnd = new Date(auctionStart.getTime() + 2 * 60 * 1000);
                 const now = new Date();
                 let auctionStatus = '';
                 if (now < auctionStart) {

@@ -87,6 +87,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p><strong>Description:</strong> ${cargo.description}</p>
                         <div>${imagesHtml}</div>
                     `;
+                    // Remove any bid or auction options from listing page
+                    // Only show 'Enter Auction' button for non-owners
                     if (!isOwner) {
                         const enterBtn = document.createElement('button');
                         enterBtn.textContent = 'Enter Auction';
