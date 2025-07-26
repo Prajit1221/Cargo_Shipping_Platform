@@ -16,12 +16,18 @@
             <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#1a73e8"/><path d="M12 32V20.5C12 19.12 13.12 18 14.5 18H33.5C34.88 18 36 19.12 36 20.5V32" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="26" width="16" height="8" rx="2" fill="#fff"/><circle cx="18.5" cy="34.5" r="2.5" fill="#1a73e8"/><circle cx="29.5" cy="34.5" r="2.5" fill="#1a73e8"/></svg>
             <span style="font-size:1.5rem;font-weight:700;letter-spacing:1px;">Safe Haul</span>
         </span>
+        <div class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
         <span class="nav-center">
             <a href="index.html">Home</a>
             <a href="auction.html">Auctions</a>
             <a href="listing.html">List Cargo</a>
-            <a href="dashboard.html">Dashboard</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
             <a href="profile.html">Profile</a>
+            <a href="chat.html">Chat</a>
         </span>
         <span class="nav-right">
             <a href="login.html" id="nav-login">Login</a>
@@ -29,37 +35,35 @@
             <button id="darkModeToggle" style="margin-left:0.5rem;">🌙</button>
         </span>
     </nav>
-    <main>
-        <div style="text-align:center;margin-bottom:2rem;">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:0.5rem;"><rect width="48" height="48" rx="12" fill="#1a73e8"/><path d="M12 32V20.5C12 19.12 13.12 18 14.5 18H33.5C34.88 18 36 19.12 36 20.5V32" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="16" y="26" width="16" height="8" rx="2" fill="#fff"/><circle cx="18.5" cy="34.5" r="2.5" fill="#1a73e8"/><circle cx="29.5" cy="34.5" r="2.5" fill="#1a73e8"/></svg>
-            <h2 style="font-size:2rem;margin:0;">Safe Haul Dashboard</h2>
+    <main class="dashboard-grid container">
+        <div class="dashboard-card welcome-card">
+            <div id="welcomeSection"></div>
         </div>
-        <section id="welcomeSection" class="card" style="text-align:center;margin-bottom:2rem;"></section>
-        <section id="statsSection" class="card" style="display:flex;gap:2rem;justify-content:center;margin-bottom:2rem;"></section>
-        <section class="card" style="display:flex;flex-wrap:wrap;gap:2rem;justify-content:center;margin-bottom:2rem;">
-            <div style="flex:1;min-width:250px;max-width:350px;text-align:center;">
-                <h4 style="margin-bottom:0.5rem;">Status Distribution</h4>
-                <canvas id="pieChart" width="300" height="300"></canvas>
-            </div>
-            <div style="flex:1;min-width:250px;max-width:350px;text-align:center;">
-                <h4 style="margin-bottom:0.5rem;">Activity Over Time</h4>
-                <canvas id="barChart" width="300" height="300"></canvas>
-            </div>
-        </section>
-        <section id="notificationsSection" class="card" style="margin-bottom:2rem;">
+        <div class="dashboard-card stats-card">
+            <div id="statsSection"></div>
+        </div>
+        <div class="dashboard-card notifications-card">
             <h3 style="margin-top:0;">Notifications</h3>
             <ul id="notificationsList" style="list-style:none;padding:0;margin:0;"></ul>
-        </section>
-        <section id="roleSection" class="card">
-            <!-- Role-specific content (cargo list or bids) will be loaded here -->
-        </section>
-        <section class="card" style="margin-top:2rem;">
+        </div>
+        <div class="dashboard-card role-card">
+            <div id="roleSection"></div>
+        </div>
+        <div class="dashboard-card chart-card">
+            <h4 style="margin-bottom:0.5rem;">Status Distribution</h4>
+            <canvas id="pieChart"></canvas>
+        </div>
+        <div class="dashboard-card chart-card">
+            <h4 style="margin-bottom:0.5rem;">Activity Over Time</h4>
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="dashboard-card history-card">
             <h4 style="margin-bottom:0.5rem;">Recent Activity</h4>
             <table id="historyTable" style="width:100%;border-collapse:collapse;">
                 <thead><tr><th>Date</th><th>Action</th><th>Details</th></tr></thead>
                 <tbody></tbody>
             </table>
-        </section>
+        </div>
     </main>
     <footer>
         &copy; 2024 Safe Haul. All rights reserved.

@@ -9,15 +9,20 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
-    <main>
+    <main class="container">
         <h2>Cargo Details</h2>
         <section id="cargoInfo">
             <!-- Cargo information will be loaded here -->
+            <div class="details-grid">
+                <div class="detail-item"><strong>Type:</strong> <span id="cargoType"></span></div>
+                <div class="detail-item"><strong>Weight:</strong> <span id="cargoWeight"></span></div>
+                <div class="detail-item"><strong>Dimensions:</strong> <span id="cargoDimensions"></span></div>
+                <div class="detail-item"><strong>Pickup:</strong> <span id="cargoPickupDate"></span></div>
+            </div>
+            <p><strong>Description:</strong> <span id="cargoDescription"></span></p>
+            <p><strong>Handling:</strong> <span id="cargoHandlingInstructions"></span></p>
         </section>
         <button id="viewRouteBtn" style="margin:1rem 0;">View Route</button>
-        <section id="cargoImages">
-            <!-- Cargo images gallery -->
-        </section>
         <section id="auctionTimer">
             <!-- Auction countdown timer -->
         </section>
@@ -49,6 +54,6 @@
             <div id="mapInfo" style="position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,0.9);padding:0.5rem 1rem;border-radius:6px;z-index:10;"></div>
         </div>
     </div>
-    <script src="assets/js/cargo_map.js"></script>
+    <script src="assets/js/cargo_details.js"></script>
 </body>
 </html> 

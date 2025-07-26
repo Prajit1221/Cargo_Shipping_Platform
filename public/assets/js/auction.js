@@ -43,31 +43,38 @@ document.addEventListener('DOMContentLoaded', function () {
                     const auctionEnd = new Date(auctionStart.getTime() + 2 * 60 * 1000);
                     const now = new Date();
                     let auctionStatus = '';
+                    let statusClass = '';
                     if (now < auctionStart) {
                         auctionStatus = 'not_started';
+                        statusClass = 'open';
                     } else if (now >= auctionStart && now < auctionEnd) {
                         auctionStatus = 'running';
+                        statusClass = 'running';
                     } else {
                         auctionStatus = 'ended';
+                        statusClass = 'closed';
                     }
                     const isOwner = currentUserId === cargo.ownerId;
-                    const imagesHtml = (cargo.images && cargo.images.length > 0)
-                        ? cargo.images.map(url => `<img src="${url}" alt="Cargo Image" style="max-width:100px;max-height:100px;margin:4px;">`).join('')
-                        : '<em>No images</em>';
 
                     // Container for each cargo
                     const cargoDiv = document.createElement('div');
-                    cargoDiv.className = 'cargo-item';
-                    cargoDiv.style = 'border:1px solid #ccc;padding:1rem;margin-bottom:1rem;border-radius:8px;';
+                    cargoDiv.className = 'auction-card';
                     cargoDiv.innerHTML = `
+                        <span class="status-badge ${statusClass}">${auctionStatus.replace('_', ' ').toUpperCase()}</span>
                         <h4>${cargo.origin} → ${cargo.destination}</h4>
-                        <p><strong>Weight:</strong> ${cargo.weight} kg</p>
+                        <div class="details-grid">
+                            <div class="detail-item"><strong>Type:</strong> <span>${cargo.cargoType}</span></div>
+                            <div class="detail-item"><strong>Weight:</strong> <span>${cargo.weight} kg</span></div>
+                            <div class="detail-item"><strong>Dimensions:</strong> <span>${cargo.dimensions.length}x${cargo.dimensions.width}x${cargo.dimensions.height} cm</span></div>
+                            <div class="detail-item"><strong>Pickup:</strong> <span>${cargo.pickupDate}</span></div>
+                        </div>
                         <p><strong>Description:</strong> ${cargo.description}</p>
-                        <div>${imagesHtml}</div>
-                        <div id="auctionTimer-${cargoId}"><em>Loading timer...</em></div>
-                        <div id="winner-${cargoId}"></div>
-                        <div id="lowestBid-${cargoId}"><em>Loading current lowest bid...</em></div>
-                        <div id="bidHistory-${cargoId}"><em>Loading bid history...</em></div>
+                        <p><strong>Handling:</strong> ${cargo.handlingInstructions || 'N/A'}</p>
+                        <div class="bid-info">
+                            <div id="auctionTimer-${cargoId}"><em>Loading timer...</em></div>
+                            <div id="lowestBid-${cargoId}"><em>Loading current lowest bid...</em></div>
+                            <div id="winner-${cargoId}"></div>
+                        </div>
                     `;
 
                     // Only show Bid button if not owner and auction is running
@@ -131,29 +138,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 const auctionEnd = new Date(auctionStart.getTime() + 2 * 60 * 1000);
                 const now = new Date();
                 let auctionStatus = '';
+                let statusClass = '';
                 if (now < auctionStart) {
                     auctionStatus = 'not_started';
+                    statusClass = 'open';
                 } else if (now >= auctionStart && now < auctionEnd) {
                     auctionStatus = 'running';
+                    statusClass = 'running';
                 } else {
                     auctionStatus = 'ended';
+                    statusClass = 'closed';
                 }
                 const isOwner = currentUserId === cargo.ownerId;
-                const imagesHtml = (cargo.images && cargo.images.length > 0)
-                    ? cargo.images.map(url => `<img src="${url}" alt="Cargo Image" style="max-width:100px;max-height:100px;margin:4px;">`).join('')
-                    : '<em>No images</em>';
                 const cargoDiv = document.createElement('div');
-                cargoDiv.className = 'cargo-item';
-                cargoDiv.style = 'border:1px solid #ccc;padding:1rem;margin-bottom:1rem;border-radius:8px;';
+                cargoDiv.className = 'auction-card';
                 cargoDiv.innerHTML = `
+                    <span class="status-badge ${statusClass}">${auctionStatus.replace('_', ' ').toUpperCase()}</span>
                     <h4>${cargo.origin} → ${cargo.destination}</h4>
-                    <p><strong>Weight:</strong> ${cargo.weight} kg</p>
+                    <div class="details-grid">
+                        <div class="detail-item"><strong>Type:</strong> <span>${cargo.cargoType}</span></div>
+                        <div class="detail-item"><strong>Weight:</strong> <span>${cargo.weight} kg</span></div>
+                        <div class="detail-item"><strong>Dimensions:</strong> <span>${cargo.dimensions.length}x${cargo.dimensions.width}x${cargo.dimensions.height} cm</span></div>
+                        <div class="detail-item"><strong>Pickup:</strong> <span>${cargo.pickupDate}</span></div>
+                    </div>
                     <p><strong>Description:</strong> ${cargo.description}</p>
-                    <div>${imagesHtml}</div>
-                    <div id="auctionTimer-${cargoId}"><em>Loading timer...</em></div>
-                    <div id="winner-${cargoId}"></div>
-                    <div id="lowestBid-${cargoId}"><em>Loading current lowest bid...</em></div>
-                    <div id="bidHistory-${cargoId}"><em>Loading bid history...</em></div>
+                    <p><strong>Handling:</strong> ${cargo.handlingInstructions || 'N/A'}</p>
+                    <div class="bid-info">
+                        <div id="auctionTimer-${cargoId}"><em>Loading timer...</em></div>
+                        <div id="lowestBid-${cargoId}"><em>Loading current lowest bid...</em></div>
+                        <div id="winner-${cargoId}"></div>
+                    </div>
                 `;
                 cargoListSection.appendChild(cargoDiv);
                 startAuctionTimer(cargoId, createdAt, auctionStart, auctionEnd, auctionStatus);

@@ -8,9 +8,15 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const origin = document.getElementById('origin').value;
             const destination = document.getElementById('destination').value;
+            const pickupDate = document.getElementById('pickupDate').value;
+            const cargoType = document.getElementById('cargoType').value;
             const weight = document.getElementById('weight').value;
+            const startingBid = document.getElementById('startingBid').value;
+            const length = document.getElementById('length').value;
+            const width = document.getElementById('width').value;
+            const height = document.getElementById('height').value;
             const description = document.getElementById('description').value;
-            const imagesInput = document.getElementById('images');
+            const handlingInstructions = document.getElementById('handlingInstructions').value;
 
             const user = firebase.auth().currentUser;
             if (!user) {
@@ -18,26 +24,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Upload images to Firebase Storage and get URLs
-            let imageUrls = [];
-            if (imagesInput.files.length > 0) {
-                const uploadPromises = Array.from(imagesInput.files).map(async (file) => {
-                    const storageRef = firebase.storage().ref();
-                    const fileRef = storageRef.child('cargo_images/' + Date.now() + '_' + file.name);
-                    await fileRef.put(file);
-                    return await fileRef.getDownloadURL();
-                });
-                imageUrls = await Promise.all(uploadPromises);
-            }
-
             // Save cargo details to Firestore
             try {
                 await firebase.firestore().collection('cargos').add({
                     origin,
                     destination,
+                    pickupDate,
+                    cargoType,
                     weight: Number(weight),
+                    startingBid: Number(startingBid),
+                    dimensions: {
+                        length: Number(length),
+                        width: Number(width),
+                        height: Number(height)
+                    },
                     description,
-                    images: imageUrls,
+                    handlingInstructions,
                     ownerId: user.uid,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     status: 'open' // open for bidding
@@ -75,9 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     const cargo = doc.data();
                     const cargoId = doc.id;
                     const isOwner = currentUserId === cargo.ownerId;
-                    const imagesHtml = (cargo.images && cargo.images.length > 0)
-                        ? cargo.images.map(url => `<img src="${url}" alt="Cargo Image" style="max-width:80px;max-height:80px;margin:2px;">`).join('')
-                        : '<em>No images</em>';
                     const cargoDiv = document.createElement('div');
                     cargoDiv.className = 'cargo-list-item';
                     cargoDiv.style = 'border:1px solid #ddd;padding:0.7rem;margin-bottom:0.7rem;border-radius:7px;';
@@ -85,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         <h4>${cargo.origin} → ${cargo.destination}</h4>
                         <p><strong>Weight:</strong> ${cargo.weight} kg</p>
                         <p><strong>Description:</strong> ${cargo.description}</p>
-                        <div>${imagesHtml}</div>
                     `;
                     // Remove any bid or auction options from listing page
                     // Only show 'Enter Auction' button for non-owners

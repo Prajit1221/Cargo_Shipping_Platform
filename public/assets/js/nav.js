@@ -1,5 +1,3 @@
-// Navigation bar logic: show/hide Login/Logout, handle logout, and dark mode toggle
-
 document.addEventListener('DOMContentLoaded', function () {
     // Auth state for nav
     firebase.auth().onAuthStateChanged(function(user) {
@@ -40,4 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.classList.add('dark-mode');
         }
     }
+
+    // Hamburger menu
+    const hamburger = document.querySelector('.hamburger');
+    const navCenter = document.querySelector('.nav-center');
+    hamburger.addEventListener('click', () => {
+        navCenter.classList.toggle('active');
+    });
 }); 
