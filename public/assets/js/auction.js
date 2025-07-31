@@ -37,23 +37,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 snapshot.forEach(doc => {
                     const cargo = doc.data();
                     const cargoId = doc.id;
-                    const createdAt = cargo.createdAt && cargo.createdAt.toDate ? cargo.createdAt.toDate() : new Date();
-                    // Set auctionStart to 1 minute after creation and auctionEnd to 2 minutes after auctionStart
-                    const auctionStart = new Date(createdAt.getTime() + 1 * 60 * 1000);
-                    const auctionEnd = new Date(auctionStart.getTime() + 2 * 60 * 1000);
                     const now = new Date();
-                    let auctionStatus = '';
-                    let statusClass = '';
-                    if (now < auctionStart) {
-                        auctionStatus = 'not_started';
-                        statusClass = 'open';
-                    } else if (now >= auctionStart && now < auctionEnd) {
-                        auctionStatus = 'running';
-                        statusClass = 'running';
-                    } else {
-                        auctionStatus = 'ended';
-                        statusClass = 'closed';
+                    const auctionStart = cargo.auctionStart ? cargo.auctionStart.toDate() : null;
+                    const auctionEnd = cargo.auctionEnd ? cargo.auctionEnd.toDate() : null;
+                    let auctionStatus = 'not_started';
+                    let statusClass = 'open';
+
+                    if (auctionStart && now > auctionStart) {
+                        if (auctionEnd && now < auctionEnd) {
+                            auctionStatus = 'running';
+                            statusClass = 'running';
+                        } else if (auctionEnd && now > auctionEnd) {
+                            auctionStatus = 'ended';
+                            statusClass = 'closed';
+                        }
                     }
+
                     const isOwner = currentUserId === cargo.ownerId;
 
                     // Container for each cargo
@@ -77,6 +76,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                     `;
 
+                    if (isOwner && auctionStatus === 'not_started') {
+                        const startBtn = document.createElement('button');
+                        startBtn.textContent = 'Start Auction';
+                        startBtn.onclick = () => startAuction(cargoId);
+                        cargoDiv.appendChild(startBtn);
+                    }
+
                     // Only show Bid button if not owner and auction is running
                     if (!isOwner && auctionStatus === 'running') {
                         const bidBtn = document.createElement('button');
@@ -85,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             showBidForm(cargoDiv, cargoId, auctionEnd);
                         };
                         cargoDiv.appendChild(bidBtn);
-                    } else if (auctionStatus === 'not_started') {
+                    } else if (auctionStatus === 'not_started' && !isOwner) {
                         const notStartedMsg = document.createElement('p');
                         notStartedMsg.innerHTML = '<strong>Auction not started</strong>';
                         cargoDiv.appendChild(notStartedMsg);
@@ -93,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const closedMsg = document.createElement('p');
                         closedMsg.innerHTML = '<strong>Auction ended</strong>';
                         cargoDiv.appendChild(closedMsg);
-                    } else if (isOwner) {
+                    } else if (isOwner && auctionStatus !== 'not_started') {
                         const ownerMsg = document.createElement('p');
                         ownerMsg.innerHTML = '<strong>Your listing</strong>';
                         cargoDiv.appendChild(ownerMsg);
@@ -109,7 +115,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     cargoDiv.appendChild(routeBtn);
 
                     cargoListSection.appendChild(cargoDiv);
-                    startAuctionTimer(cargoId, createdAt, auctionStart, auctionEnd, auctionStatus);
+                    if (auctionStart && auctionEnd) {
+                        startAuctionTimer(cargoId, auctionStart, auctionEnd, auctionStatus);
+                    }
                     loadLowestBid(cargoId);
                     loadBidHistory(cargoId);
                     if (auctionStatus === 'ended') {
@@ -132,23 +140,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 const cargo = doc.data();
                 currentCargoOwnerId = cargo.ownerId;
-                const createdAt = cargo.createdAt && cargo.createdAt.toDate ? cargo.createdAt.toDate() : new Date();
-                // Also update in loadSingleCargo
-                const auctionStart = new Date(createdAt.getTime() + 1 * 60 * 1000);
-                const auctionEnd = new Date(auctionStart.getTime() + 2 * 60 * 1000);
                 const now = new Date();
-                let auctionStatus = '';
-                let statusClass = '';
-                if (now < auctionStart) {
-                    auctionStatus = 'not_started';
-                    statusClass = 'open';
-                } else if (now >= auctionStart && now < auctionEnd) {
-                    auctionStatus = 'running';
-                    statusClass = 'running';
-                } else {
-                    auctionStatus = 'ended';
-                    statusClass = 'closed';
+                const auctionStart = cargo.auctionStart ? cargo.auctionStart.toDate() : null;
+                const auctionEnd = cargo.auctionEnd ? cargo.auctionEnd.toDate() : null;
+                let auctionStatus = 'not_started';
+                let statusClass = 'open';
+
+                if (auctionStart && now > auctionStart) {
+                    if (auctionEnd && now < auctionEnd) {
+                        auctionStatus = 'running';
+                        statusClass = 'running';
+                    } else if (auctionEnd && now > auctionEnd) {
+                        auctionStatus = 'ended';
+                        statusClass = 'closed';
+                    }
                 }
+
                 const isOwner = currentUserId === cargo.ownerId;
                 const cargoDiv = document.createElement('div');
                 cargoDiv.className = 'auction-card';
@@ -170,7 +177,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 `;
                 cargoListSection.appendChild(cargoDiv);
-                startAuctionTimer(cargoId, createdAt, auctionStart, auctionEnd, auctionStatus);
+
+                if (isOwner && auctionStatus === 'not_started') {
+                    const startBtn = document.createElement('button');
+                    startBtn.textContent = 'Start Auction';
+                    startBtn.onclick = () => startAuction(cargoId);
+                    cargoDiv.appendChild(startBtn);
+                }
+
+                if (auctionStart && auctionEnd) {
+                    startAuctionTimer(cargoId, auctionStart, auctionEnd, auctionStatus);
+                }
                 loadLowestBid(cargoId);
                 loadBidHistory(cargoId);
                 if (auctionStatus === 'ended') {
@@ -188,8 +205,23 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    function startAuctionTimer(cargoId, createdAt, auctionStart, auctionEnd, auctionStatus) {
+    function startAuction(cargoId) {
+        const now = new Date();
+        const auctionStart = now;
+        const auctionEnd = new Date(now.getTime() + 2 * 60 * 1000); // 2 minutes from now
+        firebase.firestore().collection('cargos').doc(cargoId).update({
+            auctionStart: firebase.firestore.Timestamp.fromDate(auctionStart),
+            auctionEnd: firebase.firestore.Timestamp.fromDate(auctionEnd),
+            status: 'open'
+        });
+    }
+
+    function startAuctionTimer(cargoId, auctionStart, auctionEnd, auctionStatus) {
         const timerDiv = document.getElementById(`auctionTimer-${cargoId}`);
+        if (countdownIntervals[cargoId]) {
+            clearInterval(countdownIntervals[cargoId]);
+        }
+
         function updateTimer() {
             const now = new Date();
             if (now < auctionStart) {
@@ -204,17 +236,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 timerDiv.innerHTML = `<strong>Time left:</strong> ${min}m ${sec}s`;
             } else {
                 timerDiv.innerHTML = '<strong>Auction ended</strong>';
+                clearInterval(countdownIntervals[cargoId]);
+                closeAuctionAndSelectWinner(cargoId);
             }
         }
         updateTimer();
-        setInterval(updateTimer, 1000);
+        countdownIntervals[cargoId] = setInterval(updateTimer, 1000);
     }
 
     async function closeAuctionAndSelectWinner(cargoId) {
+        const cargoRef = firebase.firestore().collection('cargos').doc(cargoId);
+        const cargoDoc = await cargoRef.get();
+        const cargoData = cargoDoc.data();
+
+        if (cargoData.status === 'closed') {
+            return; // Already closed
+        }
+
         // Get the lowest bid
-        const bidsSnapshot = await firebase.firestore()
-            .collection('cargos').doc(cargoId)
-            .collection('bids')
+        const bidsSnapshot = await cargoRef.collection('bids')
             .orderBy('amount', 'asc')
             .limit(1)
             .get();
@@ -225,15 +265,23 @@ document.addEventListener('DOMContentLoaded', function () {
             winnerId = bid.userId;
             winningAmount = bid.amount;
         }
-        // Get cargo info for notifications
-        const cargoDoc = await firebase.firestore().collection('cargos').doc(cargoId).get();
-        const cargoData = cargoDoc.data();
+
         // Update cargo status and winner in Firestore
-        await firebase.firestore().collection('cargos').doc(cargoId).update({
+        await cargoRef.update({
             status: 'closed',
             winnerId: winnerId || null,
             winningAmount: winningAmount || null
         });
+
+        // Create chat between owner and winner
+        if (winnerId) {
+            const chatId = [cargoData.ownerId, winnerId].sort().join('_');
+            await firebase.firestore().collection('chats').doc(chatId).set({
+                participants: [cargoData.ownerId, winnerId],
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+        }
+
         // Send notifications
         const notifications = [];
         // Notify cargo owner

@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat - Safe Haul</title>
+    <title>Auction History - Cargo Shipping</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/chat.css">
 </head>
 <body>
     <nav>
@@ -24,8 +23,8 @@
             <a href="listing.html">List Cargo</a>
             <a href="dashboard.html">Dashboard</a>
             <a href="profile.html">Profile</a>
-            <a href="chat.html" class="active">Chat</a>
-            <a href="history.html">History</a>
+            <a href="chat.html">Chat</a>
+            <a href="history.html" class="active">History</a>
         </span>
         <span class="nav-right">
             <a href="login.html" id="nav-login">Login</a>
@@ -33,35 +32,25 @@
             <button id="darkModeToggle" style="margin-left:0.5rem;">🌙</button>
         </span>
     </nav>
-    <main class="chat-container container">
-        <div id="user-list-container">
-            <h2>Chats</h2>
-            <div id="user-list"></div>
-        </div>
-        <div id="chat-window">
-            <div id="chat-header">
-                Select a user to start chatting
-            </div>
-            <div id="messages-container">
-            </div>
-            <div id="message-form-container" style="display:none;">
-                <form id="messageForm">
-                    <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off">
-                    <button type="submit">Send</button>
-                </form>
-            </div>
-        </div>
+    <main class="container">
+        <h2>Completed Auctions</h2>
+        <section id="completedAuctions">
+            <!-- Completed auctions will be loaded here -->
+        </section>
     </main>
     <footer>
-        &copy; 2024 Safe Haul. All rights reserved.
+        &copy; 2024 Cargo Shipping Platform. All rights reserved.
     </footer>
-
+    <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Your Firebase config -->
     <script src="assets/js/firebase.js"></script>
     <script src="assets/js/session.js"></script>
+    <script src="assets/js/history.js"></script>
     <script src="assets/js/nav.js"></script>
-    <script src="assets/js/chat.js"></script>
 </body>
 </html>
