@@ -3,6 +3,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     // Signup functionality
+    
     const signupForm = document.getElementById('signupForm');
     if (signupForm) {
         signupForm.addEventListener('submit', async function (e) {
