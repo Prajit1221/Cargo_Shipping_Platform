@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const singleCargoId = urlParams.get('cargoId');
     const bidSection = document.getElementById('bidSection');
     let currentCargoOwnerId = null;
-
+                                   
     // Get current user ID
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {

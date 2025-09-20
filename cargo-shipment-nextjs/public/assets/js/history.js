@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
             loadCompletedAuctions();
         } else {
             completedAuctionsSection.innerHTML = '<p>Please log in to view auction history.</p>';
-        }
+        }                   
     });
 
     function loadCompletedAuctions() {
